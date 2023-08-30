@@ -6,11 +6,63 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/08/25 20:05:36 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/08/30 12:28:25 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*get_line(char **buffer, int is_last_line)
+{
+	char	*line;
+	char	*temp;
+	int		line_len;
+
+	line_len = 0;
+	while ((*buffer)[line_len] != '\n' && (*buffer)[line_len] != '\0')
+		line_len++;
+	if ((*buffer)[line_len] == '\n' && (*buffer)[line_len + 1] != '\0')
+	{
+		line = ft_substr(*buffer, 0, line_len + 1);
+		temp = ft_strdup(*buffer + line_len + 1);
+		free(*buffer);
+		*buffer = temp;
+	}
+	else
+	{
+		line = ft_strdup(*buffer);
+		free(*buffer);
+		*buffer = NULL;
+	}
+	return (line);
+}
+
+static void	update_buffer(char **buffer, char *new_buffer)
+{
+	free(*buffer);
+	*buffer = new_buffer;
+}
+
+static char	*read_file_content(int fd, char **buffer)
+{
+	char	*read_buffer;
+	int		bytes_read;
+
+	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + NULL_BYTE));
+	if (!read_buffer)
+		return (FALSE);
+	bytes_read = 1;
+	while (bytes_read > 0 && !ft_strchr(read_buffer, '\n'))
+	{
+		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+			break ;
+		read_buffer[bytes_read] = '\0';
+		update_buffer(*buffer, ft_strjoin(*buffer, read_buffer));
+	}
+	free(read_buffer);
+	return (get_line(*buffer, bytes_read));
+}
 
 char	*get_next_line(int fd)
 {
@@ -19,52 +71,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > FD_LIMITS)
 		return (NULL);
-	read_file_content(fd, &buffer);
+	curr_line = read_file_content(fd, &buffer);
 	if (!buffer)
 		return (NULL);
-	curr_line = get_line(&buffer);
 	return (curr_line);
-}
-
-void	read_file_content(int fd, char **buffer)
-{
-	char	*temp;
-	int		bytes_read;
-	char	*read_buffer;
-
-	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!read_buffer)
-		return (NULL);
-	bytes_read = 1;
-	while (bytes_read > 0 && !has_newline(*buffer))
-	{
-		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			break ;
-		read_buffer[bytes_read] = '\0';
-		temp = ft_strjoin(*buffer, read_buffer);
-		free(*buffer);
-		*buffer = temp;
-	}
-	free(read_buffer);
-}
-
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		fd;
-	int		bytes_read;
-	char	line[BUFFER_SIZE + 1];
-
-	fd = open("test.txt", O_RDONLY);
-	printf("fd value: %d\n", fd);
-	if (fd < 0)
-		return (0);
-	bytes_read = read(fd, line, BUFFER_SIZE);
-	printf("Bytes_read: %d\n", bytes_read);
-	bytes_read = read(fd, line, BUFFER_SIZE);
-	printf("Bytes_read: %d\n", bytes_read);
-	close(fd);
 }
