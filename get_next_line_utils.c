@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:47:09 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/08/30 12:20:19 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/08/31 00:08:56 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	s2_len;
 	size_t	i;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
@@ -40,9 +40,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (*s1)
+	while (s1 && *s1 != '\0')
 		ptr[i++] = *s1++;
-	while (*s2)
+	while (s2 && *s2 != '\0')
 		ptr[i++] = *s2++;
 	ptr[i] = '\0';
 	return (ptr);
@@ -52,6 +52,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	count;
 
+	if (!s)
+		return (0);
 	count = 0;
 	while (s[count])
 		count++;
