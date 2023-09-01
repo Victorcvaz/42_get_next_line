@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/08/31 18:32:50 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/08/31 21:50:58 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static char	*get_line(char **buffer)
 		update_buffer(buffer, NULL);
 		return (line);
 	}
-	line = ft_substr(*buffer, 0, line_len + 1);
-	update_buffer(buffer, ft_strdup(*buffer + line_len + 1));
+	line = ft_substr(*buffer, 0, line_len + LINE_BREAK);
+	update_buffer(buffer, ft_strdup(*buffer + line_len + LINE_BREAK));
 	return (line);
 }
 
