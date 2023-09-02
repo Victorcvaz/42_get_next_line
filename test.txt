@@ -1,5 +1,0 @@
-Sou a linha 1 do arquivo 1
-Sou a linha 2 do arquivo 1
-
-
-

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/31 21:19:58 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/08/31 21:23:00 by victorcvaz       ###   ########.fr       */
+/*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
+/*   Updated: 2023/09/01 22:47:42 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static void	read_file_content(int fd, char **buffer);
 static char	*get_line(char **buffer);
@@ -73,9 +73,7 @@ static char	*get_line(char **buffer)
 
 static void	update_buffer(char **buffer, char *new_buffer)
 {
-	char	*old_buffer;
-
-	old_buffer = *buffer;
+	if (*buffer)
+		free(*buffer);
 	*buffer = new_buffer;
-	free(old_buffer);
 }

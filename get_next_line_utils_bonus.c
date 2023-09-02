@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/31 21:20:31 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/08/31 21:20:33 by victorcvaz       ###   ########.fr       */
+/*   Created: 2023/08/29 20:47:09 by victorcvaz        #+#    #+#             */
+/*   Updated: 2023/09/01 22:11:32 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -67,12 +67,15 @@ char	*ft_strdup(const char *s)
 
 	if (!s)
 		return (NULL);
-	i = -1;
+	i = 0;
 	str = (char *) malloc(sizeof(char) * ft_strlen(s) + 1);
 	if (!str)
 		return (NULL);
-	while (s[++i] != '\0')
+	while (s[i])
+	{
 		str[i] = s[i];
+		i++;
+	}
 	str[i] = '\0';
 	return (str);
 }
@@ -81,6 +84,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
 	size_t	s_len;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
@@ -92,7 +96,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ptr = (char *) malloc(sizeof(char) * (len + NULL_BYTE));
 	if (!ptr)
 		return (NULL);
-	while (len--)
-		ptr[len] = s[start + len];
+	i = -1;
+	while (++i < len)
+		ptr[i] = s[start + i];
+	ptr[i] = '\0';
 	return (ptr);
 }
