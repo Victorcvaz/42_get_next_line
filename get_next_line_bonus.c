@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/09/01 22:47:42 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/09/02 22:16:04 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,5 @@ static void	update_buffer(char **buffer, char *new_buffer)
 	if (*buffer)
 		free(*buffer);
 	*buffer = new_buffer;
+	new_buffer = NULL;
 }
