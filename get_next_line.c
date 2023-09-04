@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/09/01 22:09:37 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/09/04 02:36:43 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	read_file_content(int fd, char **buffer)
 		read_buffer[bytes_read] = '\0';
 		update_buffer(buffer, ft_strjoin(*buffer, read_buffer));
 	}
-	if (read_buffer[0] == '\0' && (*buffer == NULL || **buffer == '\0'))
+	if (read_buffer[0] == '\0' && (!*buffer || !**buffer))
 		update_buffer(buffer, NULL);
 	return (free(read_buffer));
 }
