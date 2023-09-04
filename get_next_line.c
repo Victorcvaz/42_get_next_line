@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 00:46:47 by victorcvaz        #+#    #+#             */
-/*   Updated: 2023/09/04 02:36:43 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2023/09/04 06:08:06 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	read_file_content(int fd, char **buffer)
 	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + NULL_BYTE));
 	if (!read_buffer)
 		return ;
+	read_buffer[0] = '\0';
 	bytes_read = 1;
 	while (bytes_read > 0 && !ft_strchr(read_buffer, '\n'))
 	{
@@ -76,4 +77,5 @@ static void	update_buffer(char **buffer, char *new_buffer)
 	if (*buffer)
 		free(*buffer);
 	*buffer = new_buffer;
+	new_buffer = NULL;
 }
